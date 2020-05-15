@@ -10,5 +10,9 @@
   },
   "repository": "git@github.com:tomjhinton/theremin.git",
   "author": "Tom Hinton <tomjhinton@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "three": "^0.116.1",
+    "tone": "^13.8.25"
+  }
 }
