@@ -12,6 +12,7 @@
   "author": "Tom Hinton <tomjhinton@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "@tensorflow-models/posenet": "^2.2.1",
     "three": "^0.116.1",
     "tone": "^13.8.25"
   }
