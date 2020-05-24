@@ -6,11 +6,11 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import dat from 'dat.gui'
 import Stats from 'stats.js'
 import "@babel/polyfill"
-const videoWidth = 625
-const videoHeight = 250
+let videoWidth =  window.innerWidth
+let videoHeight = window.innerHeight
 const stats = new Stats()
 import { drawKeypoints, drawSkeleton, drawHeatMapValues } from './demo_util'
-
+console.log(videoWidth)
 let  scene = new THREE.Scene()
 let  camera = new THREE.PerspectiveCamera( 30, window.innerWidth / window.innerHeight, 0.5, 10000 )
 camera.position.z = 30
@@ -288,7 +288,7 @@ function setupFPS() {
 function detectPoseInRealTime(video, net) {
   const canvas = document.getElementById('output')
   const ctx = canvas.getContext('2d')
-  const flipPoseHorizontal = true // since images are being fed from a webcam
+  const flipPoseHorizontal = false // since images are being fed from a webcam
 
   canvas.width = videoWidth
   canvas.height = videoHeight
@@ -331,11 +331,7 @@ function detectPoseInRealTime(video, net) {
         poses.push(pose)
 
         if(poses.length>= 1){
-        if(poses[0][0].keypoints[9].position.x > 600){
-
-
-
-        }
+        left.position.x = poses[0][0].keypoints[9].position.x
 
         if(poses[0][0].keypoints[9].position.x < 600){
 
@@ -448,7 +444,14 @@ navigator.getUserMedia = navigator.getUserMedia ||
 bindPage() /// kick off the demo
 
 
+let base = new THREE.BoxGeometry( 2, 2, 2 )
+let  materialT =  new THREE.MeshPhongMaterial( { color: `rgba(${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)},1)`, specular: `rgba(${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)},1)` , shininess: 100, side: THREE.DoubleSide, opacity: 0.8,
+    transparent: false } )
 
+
+  //BOX
+
+  let mesh = new THREE.Mesh( base, materialT )
 
 
 function animate() {
