@@ -444,14 +444,18 @@ navigator.getUserMedia = navigator.getUserMedia ||
 bindPage() /// kick off the demo
 
 
-let base = new THREE.BoxGeometry( 2, 2, 2 )
-let  materialT =  new THREE.MeshPhongMaterial( { color: `rgba(${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)},1)`, specular: `rgba(${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)},1)` , shininess: 100, side: THREE.DoubleSide, opacity: 0.8,
-    transparent: false } )
+const base = new THREE.BoxGeometry( 8, 2, 3 )
+const  ant = new THREE.CylinderGeometry( 0.2, 0.2, 5, 10 )
+const  materialT =  new THREE.MeshPhongMaterial( { color: `rgba(${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)},1)`, specular: `rgba(${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)},1)` , shininess: 100, side: THREE.DoubleSide, opacity: 0.8,
+  transparent: false } )
 
 
-  //BOX
 
-  let mesh = new THREE.Mesh( base, materialT )
+
+const baseMesh = new THREE.Mesh( base, materialT )
+const antMesh = new THREE.Mesh( ant, materialT )
+
+scene.add(baseMesh, antMesh)
 
 
 function animate() {
