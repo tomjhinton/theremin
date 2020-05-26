@@ -1,5 +1,6 @@
 const THREE = require('three')
 import Tone from 'tone'
+import './style.scss'
 import * as posenet from '@tensorflow-models/posenet'
 import {OBJLoader2}  from 'three/examples/jsm/loaders/OBJLoader2.js'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
@@ -24,14 +25,13 @@ scene.add(light)
 
 const theremin = document.getElementById('theremin')
 
-const renderer = new THREE.WebGLRenderer()
+const renderer = new THREE.WebGLRenderer({alpha: true })
 renderer.setSize( window.innerWidth, window.innerHeight )
 theremin.appendChild( renderer.domElement )
 // var controls = new OrbitControls( camera, renderer.domElement );
 
 
 
-scene.background = new THREE.Color( 0x000000 )
 let left
 let right
 var loader =  new OBJLoader2
@@ -331,7 +331,7 @@ function detectPoseInRealTime(video, net) {
         poses.push(pose)
 
         if(poses.length>= 1){
-        left.position.x = poses[0][0].keypoints[9].position.x
+        // left.position.x = poses[0][0].keypoints[9].position.x
 
         if(poses[0][0].keypoints[9].position.x < 600){
 
@@ -395,6 +395,8 @@ function detectPoseInRealTime(video, net) {
       if (score >= minPoseConfidence) {
         if (guiState.output.showPoints) {
           drawKeypoints(keypoints, minPartConfidence, ctx)
+          left.position.x = poses[0][0].keypoints[9].position.x
+          right.position.x = poses[0][0].keypoints[10].position.x
         }
         if (guiState.output.showSkeleton) {
           drawSkeleton(keypoints, minPartConfidence, ctx)
