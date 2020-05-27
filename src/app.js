@@ -3,17 +3,17 @@ import Tone from 'tone'
 import './style.scss'
 import * as posenet from '@tensorflow-models/posenet'
 import {OBJLoader2}  from 'three/examples/jsm/loaders/OBJLoader2.js'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import dat from 'dat.gui'
 import Stats from 'stats.js'
-import "@babel/polyfill"
-let videoWidth =  window.innerWidth
-let videoHeight = window.innerHeight
+import '@babel/polyfill'
+const videoWidth =  window.innerWidth
+const videoHeight = window.innerHeight
 const stats = new Stats()
 import { drawKeypoints, drawSkeleton, drawHeatMapValues } from './demo_util'
 console.log(videoWidth)
-let  scene = new THREE.Scene()
-let  camera = new THREE.PerspectiveCamera( 30, window.innerWidth / window.innerHeight, 0.5, 10000 )
+const  scene = new THREE.Scene()
+const  camera = new THREE.PerspectiveCamera( 30, window.innerWidth / window.innerHeight, 0.5, 10000 )
 camera.position.z = 30
 scene.add(camera)
 
@@ -48,21 +48,21 @@ loader.load(
     console.log(object)
     object.traverse( function ( child ) {
 
-                    if ( child instanceof THREE.Mesh ) {
+      if ( child instanceof THREE.Mesh ) {
 
-                        child.material = material;
+        child.material = material
 
-                    }
+                }
 
-                } );
+                } )
     left =  object
-		scene.add( left );
+		scene.add( left )
 
-	},
-	// called when loading is in progresses
+  },
+  // called when loading is in progresses
 	function ( xhr ) {
 
-		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' )
 
 	},
 	// called when loading has errors
@@ -71,27 +71,27 @@ loader.load(
 		console.log( 'An error happened' );
 
 	}
-);
+)
 
 loader2.load(
-	// resource URL
-	'assets/right.obj',
-	// called when resource is loaded
-	function ( object ) {
+  // resource URL
+  'assets/right.obj',
+  // called when resource is loaded
+  function ( object ) {
     console.log(object)
     object.traverse( function ( child ) {
 
-                    if ( child instanceof THREE.Mesh ) {
+      if ( child instanceof THREE.Mesh ) {
 
-                        child.material = material;
+        child.material = material
 
-                    }
+      }
 
-                } );
+    } )
     right =  object
-		scene.add( right )
+    scene.add( right )
 
-	},
+  },
 	// called when loading is in progresses
 	function ( xhr ) {
 
@@ -217,7 +217,7 @@ function setupGui(cameras, net) {
     guiState, 'algorithm', ['single-pose', 'multi-pose'])
 
   // The input parameters have the most effect on accuracy and speed of the network
-  let input = gui.addFolder('Input')
+  const input = gui.addFolder('Input')
   // Architecture: there are a few PoseNet models varying in size and accuracy. 1.01
   // is the largest, but will be the slowest. 0.50 is the fastest, but least accurate.
   const architectureController =
@@ -225,21 +225,21 @@ function setupGui(cameras, net) {
   // Output stride:  Internally, this parameter affects the height and width of the layers
   // in the neural network. The lower the value of the output stride the higher the accuracy
   // but slower the speed, the higher the value the faster the speed but lower the accuracy.
-  input.add(guiState.input, 'outputStride', [8, 16, 32]);
+  input.add(guiState.input, 'outputStride', [8, 16, 32])
   // Image scale factor: What to scale the image by before feeding it through the network.
-  input.add(guiState.input, 'imageScaleFactor').min(0.2).max(1.0);
+  input.add(guiState.input, 'imageScaleFactor').min(0.2).max(1.0)
   //input.open();
 
   // Pose confidence: the overall confidence in the estimation of a person's
   // pose (i.e. a person detected in a frame)
   // Min part confidence: the confidence that a particular estimated keypoint
   // position is accurate (i.e. the elbow's position)
-  let single = gui.addFolder('Single Pose Detection')
-  single.add(guiState.singlePoseDetection, 'minPoseConfidence', 0.0, 1.0);
-  single.add(guiState.singlePoseDetection, 'minPartConfidence', 0.0, 1.0);
+  const single = gui.addFolder('Single Pose Detection')
+  single.add(guiState.singlePoseDetection, 'minPoseConfidence', 0.0, 1.0)
+  single.add(guiState.singlePoseDetection, 'minPartConfidence', 0.0, 1.0)
   //single.open();
 
-  let multi = gui.addFolder('Multi Pose Detection')
+  const multi = gui.addFolder('Multi Pose Detection')
   multi.add(
     guiState.multiPoseDetection, 'maxPoseDetections').min(1).max(20).step(1)
   multi.add(guiState.multiPoseDetection, 'minPoseConfidence', 0.0, 1.0)
@@ -248,7 +248,7 @@ function setupGui(cameras, net) {
   // defaults to 20, which is probably fine for most use cases
   multi.add(guiState.multiPoseDetection, 'nmsRadius').min(0.0).max(40.0)
 
-  let output = gui.addFolder('Output')
+  const output = gui.addFolder('Output')
   output.add(guiState.output, 'showVideo')
   output.add(guiState.output, 'showSkeleton')
   output.add(guiState.output, 'showPoints')
@@ -299,7 +299,7 @@ function detectPoseInRealTime(video, net) {
       guiState.net.dispose()
 
       // Load the PoseNet model weights for either the 0.50, 0.75, 1.00, or 1.01 version
-      guiState.net = await posenet.load(Number(guiState.changeToArchitecture));
+      guiState.net = await posenet.load(Number(guiState.changeToArchitecture))
 
       guiState.changeToArchitecture = null
     }
