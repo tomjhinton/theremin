@@ -460,6 +460,7 @@ const  materialTable =  new THREE.MeshPhongMaterial( { color: `rgba(${Math.floor
 const baseMesh = new THREE.Mesh( base, materialT )
 const antMesh = new THREE.Mesh( ant, materialT )
 const tableMesh = new THREE.Mesh( table, materialTable )
+tableMesh.position.z=-1
 
 scene.add(baseMesh, antMesh, tableMesh)
 
